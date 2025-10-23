@@ -1,5 +1,5 @@
 services:
-  spec-workflow-mcp:
+  spec-workflow-mcp-pro:
     build: .
     ports:
       - "${DASHBOARD_PORT:-3000}:${DASHBOARD_PORT:-3000}"

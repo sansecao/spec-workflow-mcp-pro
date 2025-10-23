@@ -5,7 +5,7 @@ RUN apk add --no-cache git
 WORKDIR /app
 
 # Clone the MCP server during build
-RUN git clone --depth 1 https://github.com/Pimzino/spec-workflow-mcp.git .
+RUN git clone --depth 1 https://github.com/sansecao/spec-workflow-mcp-pro.git .
 
 # Install dependencies and build
 RUN npm ci && npm run build

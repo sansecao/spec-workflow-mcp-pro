@@ -1,14 +1,18 @@
 {
-    "mcpServers": {
-      "spec-workflow": {
-        "command": "docker",
-        "args": [
-          "run", "--rm", "-i",
-          "-v", "./.spec-workflow:/home/username/project/.spec-workflow:rw",
-          "--entrypoint=node",
-          "spec-workflow-mcp:latest",
-          "/app/dist/index.js", "./"
-        ]
-      }
+  "mcpServers": {
+    "spec-workflow": {
+      "command": "docker",
+      "args": [
+        "run",
+        "--rm",
+        "-i",
+        "-v",
+        "./.spec-workflow:/home/username/project/.spec-workflow:rw",
+        "--entrypoint=node",
+        "spec-workflow-mcp-pro:latest",
+        "/app/dist/index.js",
+        "./"
+      ]
     }
   }
+}

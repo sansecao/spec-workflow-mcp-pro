@@ -1,5 +1,5 @@
 {
-  "name": "spec-workflow-mcp",
+  "name": "spec-workflow-mcp-pro",
   "displayName": "%displayName%",
   "description": "%description%",
   "version": "1.0.0",
@@ -8,7 +8,7 @@
   "icon": "icon.png",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Pimzino/spec-workflow-mcp.git"
+    "url": "https://github.com/sansecao/spec-workflow-mcp-pro.git"
   },
   "engines": {
     "vscode": "^1.99.0"
@@ -186,7 +186,12 @@
         },
         "specWorkflow.language": {
           "type": "string",
-          "enum": ["auto", "en", "ja", "zh"],
+          "enum": [
+            "auto",
+            "en",
+            "ja",
+            "zh"
+          ],
           "enumDescriptions": [
             "%config.language.auto.description%",
             "%config.language.en.description%",

@@ -15,7 +15,7 @@ This directory contains Docker configuration files to run the Spec-Workflow MCP 
 From the containers directory, build the Docker image:
 
 ```bash
-docker build -t spec-workflow-mcp .
+docker build -t spec-workflow-mcp-pro .
 ```
 
 ## MCP Server Configuration
@@ -33,7 +33,7 @@ Create or update the `.mcp.json` file in your project root with the following co
           "run", "--rm", "-i",
           "-v", "./.spec-workflow:/home/username/project/.spec-workflow:rw",
           "--entrypoint=node",
-          "spec-workflow-mcp:latest",
+          "spec-workflow-mcp-pro:latest",
           "/app/dist/index.js", "./"
         ]
       }
@@ -59,7 +59,7 @@ The container requires the `.spec-workflow` directory to be mounted at the **exa
           "run", "--rm", "-i",
           "-v", "./.spec-workflow:/home/steev/tabletopsentinel.com/.spec-workflow:rw",
           "--entrypoint=node",
-          "spec-workflow-mcp:latest",
+          "spec-workflow-mcp-pro:latest",
           "/app/dist/index.js", "./"
         ]
       }

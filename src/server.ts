@@ -1,7 +1,7 @@
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
-import { 
-  CallToolRequestSchema, 
+import {
+  CallToolRequestSchema,
   ListToolsRequestSchema,
   ListPromptsRequestSchema,
   GetPromptRequestSchema,
@@ -38,19 +38,19 @@ export class SpecWorkflowMCPServer {
     const __dirname = dirname(fileURLToPath(import.meta.url));
     const packageJsonPath = join(__dirname, '..', 'package.json');
     const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf-8'));
-    
+
     // Get all registered tools and prompts
     const tools = registerTools();
     const prompts = registerPrompts();
-    
+
     // Create tools capability object with each tool name
     const toolsCapability = tools.reduce((acc, tool) => {
       acc[tool.name] = {};
       return acc;
     }, {} as Record<string, {}>);
-    
+
     this.server = new Server({
-      name: 'spec-workflow-mcp',
+      name: 'spec-workflow-mcp-pro',
       version: packageJson.version
     }, {
       capabilities: {
@@ -68,17 +68,17 @@ export class SpecWorkflowMCPServer {
     try {
       // Validate project path
       await validateProjectPath(this.projectPath);
-      
+
       // Initialize workspace
       const __dirname = dirname(fileURLToPath(import.meta.url));
       const packageJsonPath = join(__dirname, '..', 'package.json');
       const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf-8'));
       const workspaceInitializer = new WorkspaceInitializer(this.projectPath, packageJson.version);
       await workspaceInitializer.initializeWorkspace();
-      
+
       // Initialize session manager
       this.sessionManager = new SessionManager(this.projectPath);
-      
+
       // Start dashboard if requested
       if (dashboardOptions?.autoStart) {
         try {
@@ -88,10 +88,10 @@ export class SpecWorkflowMCPServer {
             port: dashboardOptions.port
           });
           this.dashboardUrl = await this.dashboardServer.start();
-          
+
           // Create session tracking (overwrites any existing session.json)
           await this.sessionManager.createSession(this.dashboardUrl);
-          
+
           // Log dashboard startup info
           console.error(`Dashboard auto-started at: ${this.dashboardUrl}`);
         } catch (dashboardError: any) {
@@ -99,20 +99,20 @@ export class SpecWorkflowMCPServer {
           if (dashboardError.message.includes('already in use') && dashboardOptions.port) {
             // Try to check if an existing dashboard is running
             console.error(`Port ${dashboardOptions.port} is already in use, checking for existing dashboard...`);
-            
+
             try {
               const response = await fetch(`http://localhost:${dashboardOptions.port}/api/test`, {
                 method: 'GET',
                 signal: AbortSignal.timeout(1000)
               });
-              
+
               if (response.ok) {
                 const data = await response.json() as { message?: string };
                 if (data.message === DASHBOARD_TEST_MESSAGE) {
                   // Existing dashboard found, use it
                   this.dashboardUrl = `http://localhost:${dashboardOptions.port}`;
                   console.error(`Found existing dashboard at ${this.dashboardUrl} - connecting to it`);
-                  
+
                   // Update session with existing dashboard URL
                   await this.sessionManager.createSession(this.dashboardUrl);
                 } else {
@@ -132,12 +132,12 @@ export class SpecWorkflowMCPServer {
             console.error(`Failed to start dashboard: ${dashboardError.message}`);
             console.error('MCP server will continue without dashboard functionality');
           }
-          
+
           // Clear dashboard server reference since we didn't successfully create one
           this.dashboardServer = undefined;
         }
       }
-      
+
       // Create context for tools
       const context = {
         projectPath: this.projectPath,
@@ -145,36 +145,36 @@ export class SpecWorkflowMCPServer {
         sessionManager: this.sessionManager,
         lang: this.lang
       };
-      
+
       // Register handlers
       this.setupHandlers(context);
-      
+
       // Connect to stdio transport
       const transport = new StdioServerTransport();
-      
+
       // Handle client disconnection - exit gracefully when transport closes
       transport.onclose = async () => {
         await this.stop();
         process.exit(0);
       };
-      
+
       await this.server.connect(transport);
-      
+
       // Monitor stdin for client disconnection (additional safety net)
       process.stdin.on('end', async () => {
         await this.stop();
         process.exit(0);
       });
-      
+
       // Handle stdin errors
       process.stdin.on('error', async (error) => {
         console.error('stdin error:', error);
         await this.stop();
         process.exit(1);
       });
-      
+
       // MCP server initialized successfully
-      
+
     } catch (error) {
       throw error;
     }
@@ -229,18 +229,18 @@ export class SpecWorkflowMCPServer {
   startDashboardMonitoring() {
     // Check immediately
     this.checkForDashboardSession();
-    
+
     // Then check every 2 seconds
     this.dashboardMonitoringInterval = setInterval(() => {
       this.checkForDashboardSession();
     }, 2000);
   }
-  
+
   private async checkForDashboardSession() {
     if (!this.sessionManager) {
       return; // No session manager
     }
-    
+
     try {
       const dashboardUrl = await this.sessionManager.getDashboardUrl();
       if (dashboardUrl && dashboardUrl !== this.dashboardUrl) {
@@ -289,13 +289,13 @@ export class SpecWorkflowMCPServer {
         clearInterval(this.dashboardMonitoringInterval);
         this.dashboardMonitoringInterval = undefined;
       }
-      
+
       // Stop dashboard
       if (this.dashboardServer) {
         await this.dashboardServer.stop();
         this.dashboardServer = undefined;
       }
-      
+
       // Stop MCP server
       await this.server.close();
     } catch (error) {
@@ -303,7 +303,7 @@ export class SpecWorkflowMCPServer {
       // Continue with shutdown even if there are errors
     }
   }
-  
+
   getDashboardUrl(): string | undefined {
     return this.dashboardUrl;
   }
