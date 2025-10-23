@@ -1,5 +1,5 @@
 {
-  "name": "@pimzino/spec-workflow-mcp-pro",
+  "name": "@xphou/spec-workflow-mcp-pro",
   "version": "1.0.0",
   "description": "MCP server for spec-driven development workflow with real-time web dashboard",
   "main": "dist/index.js",
