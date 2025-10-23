@@ -85,16 +85,6 @@ function Header() {
               <button onClick={toggleTheme} className="btn-secondary" title={t('theme.toggle')}>
                 {theme === 'dark' ? t('theme.dark') : t('theme.light')}
               </button>
-              
-              <a
-                href="https://buymeacoffee.com/pimzino"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-3 py-1.5 bg-yellow-400 hover:bg-yellow-500 text-yellow-900 text-sm font-medium rounded-lg transition-colors"
-                title={t('support.project')}
-              >
-                {t('support.me')}
-              </a>
             </div>
 
             {/* Mobile/Tablet Hamburger Menu Button */}
@@ -216,19 +206,6 @@ function Header() {
                   <button onClick={toggleTheme} className="px-3 py-1.5 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 rounded-lg text-sm hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
                     {theme === 'dark' ? t('theme.dark') : t('theme.light')}
                   </button>
-                </div>
-                
-                {/* Support Button */}
-                <div className="pt-2">
-                  <a
-                    href="https://buymeacoffee.com/pimzino"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full inline-flex items-center justify-center px-4 py-3 bg-yellow-400 hover:bg-yellow-500 text-yellow-900 text-sm font-medium rounded-lg transition-colors"
-                    title={t('support.project')}
-                  >
-                    {t('support.me')}
-                  </a>
                 </div>
                 
                 {/* Version */}

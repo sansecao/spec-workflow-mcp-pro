@@ -59,14 +59,14 @@ sequenceDiagram
 ### Standalone Mode
 ```bash
 # Dashboard only (no MCP server)
-npx -y @pimzino/spec-workflow-mcp-pro@latest --dashboard
+npx -y @xphou/spec-workflow-mcp-pro@latest --dashboard
 
 # With custom port
-npx -y @pimzino/spec-workflow-mcp-pro@latest --dashboard --port 8080
+npx -y @xphou/spec-workflow-mcp-pro@latest --dashboard --port 8080
 
 # From specific project directory
 cd /path/to/project
-npx -y @pimzino/spec-workflow-mcp-pro@latest --dashboard
+npx -y @xphou/spec-workflow-mcp-pro@latest --dashboard
 ```
 
 ### Auto-Start with MCP Server
@@ -75,7 +75,7 @@ npx -y @pimzino/spec-workflow-mcp-pro@latest --dashboard
   "mcpServers": {
     "spec-workflow": {
       "command": "npx",
-      "args": ["-y", "@pimzino/spec-workflow-mcp-pro@latest", "/project/path", "--AutoStartDashboard"]
+      "args": ["-y", "@xphou/spec-workflow-mcp-pro@latest", "/project/path", "--AutoStartDashboard"]
     }
   }
 }

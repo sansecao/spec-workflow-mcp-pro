@@ -1,13 +1,9 @@
 # Spec Workflow MCP
 
-[![npm version](https://img.shields.io/npm/v/@pimzino/spec-workflow-mcp-pro)](https://www.npmjs.com/package/@pimzino/spec-workflow-mcp-pro)
-[![VSCode Extension](https://badgen.net/vs-marketplace/v/Pimzino.spec-workflow-mcp)](https://marketplace.visualstudio.com/items?itemName=Pimzino.spec-workflow-mcp)
+[![npm version](https://img.shields.io/npm/v/@xphou/spec-workflow-mcp-pro)](https://www.npmjs.com/package/@xphou/spec-workflow-mcp-pro)
+[![VSCode Extension](https://badgen.net/vs-marketplace/v/xphou.spec-workflow-mcp-pro)](https://marketplace.visualstudio.com/items?itemName=xphou.spec-workflow-mcp-pro)
 
 A Model Context Protocol (MCP) server for structured spec-driven development with real-time dashboard and VSCode extension.
-
-## ☕ Support This Project
-
-<a href="https://buymeacoffee.com/Pimzino" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
 
 ## 📺 Showcase
 
@@ -49,7 +45,7 @@ Add to your MCP configuration (see client-specific setup below):
   "mcpServers": {
     "spec-workflow": {
       "command": "npx",
-      "args": ["-y", "@pimzino/spec-workflow-mcp-pro@latest", "/path/to/your/project"]
+      "args": ["-y", "@xphou/spec-workflow-mcp-pro@latest", "/path/to/your/project"]
     }
   }
 }
@@ -61,7 +57,7 @@ With auto-started dashboard:
   "mcpServers": {
     "spec-workflow": {
       "command": "npx",
-      "args": ["-y", "@pimzino/spec-workflow-mcp-pro@latest", "/path/to/your/project", "--AutoStartDashboard"]
+      "args": ["-y", "@xphou/spec-workflow-mcp-pro@latest", "/path/to/your/project", "--AutoStartDashboard"]
     }
   }
 }
@@ -71,12 +67,12 @@ With auto-started dashboard:
 
 **Option A: Web Dashboard** (Required for CLI users)
 ```bash
-npx -y @pimzino/spec-workflow-mcp-pro@latest /path/to/your/project --dashboard
+npx -y @xphou/spec-workflow-mcp-pro@latest /path/to/your/project --dashboard
 ```
 
 **Option B: VSCode Extension** (Recommended for VSCode users)
 
-Install [Spec Workflow MCP Extension](https://marketplace.visualstudio.com/items?itemName=Pimzino.spec-workflow-mcp) from the VSCode marketplace.
+Install [Spec Workflow MCP Extension](https://marketplace.visualstudio.com/items?itemName=xphou.spec-workflow-mcp-pro) from the VSCode marketplace.
 
 ## 📝 How to Use
 
@@ -99,7 +95,7 @@ Configure in your Augment settings:
   "mcpServers": {
     "spec-workflow": {
       "command": "npx",
-      "args": ["-y", "@pimzino/spec-workflow-mcp-pro@latest", "/path/to/your/project"]
+      "args": ["-y", "@xphou/spec-workflow-mcp-pro@latest", "/path/to/your/project"]
     }
   }
 }
@@ -111,7 +107,7 @@ Configure in your Augment settings:
 
 Add to your MCP configuration:
 ```bash
-claude mcp add spec-workflow npx @pimzino/spec-workflow-mcp-pro@latest -- /path/to/your/project
+claude mcp add spec-workflow npx @xphou/spec-workflow-mcp-pro@latest -- /path/to/your/project
 ```
 
 **Important Notes:**
@@ -121,7 +117,7 @@ claude mcp add spec-workflow npx @pimzino/spec-workflow-mcp-pro@latest -- /path/
 
 **Alternative for Windows (if the above doesn't work):**
 ```bash
-claude mcp add spec-workflow cmd.exe /c "npx @pimzino/spec-workflow-mcp-pro@latest /path/to/your/project"
+claude mcp add spec-workflow cmd.exe /c "npx @xphou/spec-workflow-mcp-pro@latest /path/to/your/project"
 ```
 </details>
 
@@ -134,7 +130,7 @@ Add to `claude_desktop_config.json`:
   "mcpServers": {
     "spec-workflow": {
       "command": "npx",
-      "args": ["-y", "@pimzino/spec-workflow-mcp-pro@latest", "/path/to/your/project"]
+      "args": ["-y", "@xphou/spec-workflow-mcp-pro@latest", "/path/to/your/project"]
     }
   }
 }
@@ -146,7 +142,7 @@ Or with auto-started dashboard:
   "mcpServers": {
     "spec-workflow": {
       "command": "npx",
-      "args": ["-y", "@pimzino/spec-workflow-mcp-pro@latest", "/path/to/your/project", "--AutoStartDashboard"]
+      "args": ["-y", "@xphou/spec-workflow-mcp-pro@latest", "/path/to/your/project", "--AutoStartDashboard"]
     }
   }
 }
@@ -162,7 +158,7 @@ Add to your MCP server configuration:
   "mcpServers": {
     "spec-workflow": {
       "command": "npx",
-      "args": ["-y", "@pimzino/spec-workflow-mcp-pro@latest", "/path/to/your/project"]
+      "args": ["-y", "@xphou/spec-workflow-mcp-pro@latest", "/path/to/your/project"]
     }
   }
 }
@@ -178,7 +174,7 @@ Add to your Continue configuration:
   "mcpServers": {
     "spec-workflow": {
       "command": "npx",
-      "args": ["-y", "@pimzino/spec-workflow-mcp-pro@latest", "/path/to/your/project"]
+      "args": ["-y", "@xphou/spec-workflow-mcp-pro@latest", "/path/to/your/project"]
     }
   }
 }
@@ -194,7 +190,7 @@ Add to your Cursor settings (`settings.json`):
   "mcpServers": {
     "spec-workflow": {
       "command": "npx",
-      "args": ["-y", "@pimzino/spec-workflow-mcp-pro@latest", "/path/to/your/project"]
+      "args": ["-y", "@xphou/spec-workflow-mcp-pro@latest", "/path/to/your/project"]
     }
   }
 }
@@ -211,7 +207,7 @@ Add to your `opencode.json` configuration file:
   "mcp": {
     "spec-workflow": {
       "type": "local",
-      "command": ["npx", "-y", "@pimzino/spec-workflow-mcp-pro@latest", "/path/to/your/project"],
+      "command": ["npx", "-y", "@xphou/spec-workflow-mcp-pro@latest", "/path/to/your/project"],
       "enabled": true
     }
   }
@@ -265,10 +261,10 @@ GPL-3.0
 
 ## ⭐ Star History
 
-<a href="https://www.star-history.com/#Pimzino/spec-workflow-mcp&Date">
+<a href="https://www.star-history.com/#sansecao/spec-workflow-mcp-pro&Date">
  <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=Pimzino/spec-workflow-mcp&type=Date&theme=dark" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=Pimzino/spec-workflow-mcp&type=Date" />
-   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=Pimzino/spec-workflow-mcp&type=Date" />
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=sansecao/spec-workflow-mcp-pro&type=Date&theme=dark" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=sansecao/spec-workflow-mcp-pro&type=Date" />
+   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=sansecao/spec-workflow-mcp-pro&type=Date" />
  </picture>
 </a>

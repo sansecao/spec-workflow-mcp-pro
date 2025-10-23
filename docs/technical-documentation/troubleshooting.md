@@ -25,13 +25,13 @@
    // ❌ Wrong - relative path
    {
      "command": "npx",
-     "args": ["-y", "@pimzino/spec-workflow-mcp-pro@latest", "./my-project"]
+     "args": ["-y", "@xphou/spec-workflow-mcp-pro@latest", "./my-project"]
    }
    
    // ✅ Correct - absolute path
    {
      "command": "npx",
-     "args": ["-y", "@pimzino/spec-workflow-mcp-pro@latest", "/full/path/to/project"]
+     "args": ["-y", "@xphou/spec-workflow-mcp-pro@latest", "/full/path/to/project"]
    }
    ```
 
@@ -46,7 +46,7 @@
 ```bash
 # Test server manually
 cd /your/project/path
-npx -y @pimzino/spec-workflow-mcp-pro@latest --help
+npx -y @xphou/spec-workflow-mcp-pro@latest --help
 
 # If this works, check your AI client config
 ```
@@ -71,13 +71,13 @@ npx -y @pimzino/spec-workflow-mcp-pro@latest --help
    ```bash
    # Start dashboard separately
    cd /your/project
-   npx -y @pimzino/spec-workflow-mcp-pro@latest --dashboard
+   npx -y @xphou/spec-workflow-mcp-pro@latest --dashboard
    ```
 
 3. **Port Conflicts**
    ```bash
    # Try different port
-   npx -y @pimzino/spec-workflow-mcp-pro@latest --dashboard --port 8080
+   npx -y @xphou/spec-workflow-mcp-pro@latest --dashboard --port 8080
    ```
 
 4. **Session File Issues**
@@ -298,7 +298,7 @@ rm .spec-workflow/session.json
 **A**: Some MCP clients may not resolve relative paths correctly. Always use absolute paths:
 ```json
 {
-  "args": ["-y", "@pimzino/spec-workflow-mcp-pro@latest", "/full/path/to/project"]
+  "args": ["-y", "@xphou/spec-workflow-mcp-pro@latest", "/full/path/to/project"]
 }
 ```
 
@@ -341,7 +341,7 @@ tar -xzf spec-backup.tar.gz
 
 **A**: Yes, use dashboard-only mode:
 ```bash
-npx -y @pimzino/spec-workflow-mcp-pro@latest --dashboard
+npx -y @xphou/spec-workflow-mcp-pro@latest --dashboard
 ```
 
 ### Q: How do I update to the latest version?
@@ -349,7 +349,7 @@ npx -y @pimzino/spec-workflow-mcp-pro@latest --dashboard
 **A**: NPX automatically uses latest with `@latest` tag. For explicit updates:
 ```bash
 npm cache clean --force
-npx -y @pimzino/spec-workflow-mcp-pro@latest --help
+npx -y @xphou/spec-workflow-mcp-pro@latest --help
 ```
 
 ## 🔧 Technical Debugging
@@ -474,7 +474,7 @@ else
 fi
 
 echo -e "\n3. NPX cache:"
-npx -y @pimzino/spec-workflow-mcp-pro@latest --help > /dev/null && echo "✅ MCP server loads" || echo "❌ MCP server fails"
+npx -y @xphou/spec-workflow-mcp-pro@latest --help > /dev/null && echo "✅ MCP server loads" || echo "❌ MCP server fails"
 
 echo -e "\n4. Permissions:"
 ls -la .spec-workflow/ 2>/dev/null || echo "❌ Cannot read .spec-workflow/"
@@ -536,7 +536,7 @@ Include this information:
 
 ### Community Support
 
-- **GitHub Issues**: [Repository Issues](https://github.com/Pimzino/spec-workflow-mcp/issues)
+- **GitHub Issues**: [Repository Issues](https://github.com/sansecao/spec-workflow-mcp-pro/issues)
 - **Documentation**: [Technical Docs](README.md)
 - **Examples**: [API Reference](api-reference.md)
 

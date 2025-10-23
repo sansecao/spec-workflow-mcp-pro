@@ -83,10 +83,6 @@ Initial release of Spec Workflow MCP Extension:
 
 ## Support
 
-If you find this extension helpful, consider supporting the development:
-
-[☕ Buy Me a Coffee](https://buymeacoffee.com/pimzino)
-
 ## License
 
 This project is licensed under the GPL-3.0 License.
