@@ -7,52 +7,52 @@ This guide covers all configuration options for Spec Workflow MCP, including com
 ### Basic Usage
 
 ```bash
-npx -y @pimzino/spec-workflow-mcp@latest [project-path] [options]
+npx -y @pimzino/spec-workflow-mcp-pro@latest [project-path] [options]
 ```
 
 ### Available Options
 
 | Option | Description | Example |
 |--------|-------------|---------|
-| `--help` | Show comprehensive usage information | `npx -y @pimzino/spec-workflow-mcp@latest --help` |
-| `--dashboard` | Run dashboard-only mode (no MCP server) | `npx -y @pimzino/spec-workflow-mcp@latest --dashboard` |
-| `--AutoStartDashboard` | Auto-start dashboard with MCP server | `npx -y @pimzino/spec-workflow-mcp@latest --AutoStartDashboard` |
-| `--port <number>` | Specify dashboard port (1024-65535) | `npx -y @pimzino/spec-workflow-mcp@latest --port 3456` |
-| `--config <path>` | Use custom config file | `npx -y @pimzino/spec-workflow-mcp@latest --config ./my-config.toml` |
+| `--help` | Show comprehensive usage information | `npx -y @pimzino/spec-workflow-mcp-pro@latest --help` |
+| `--dashboard` | Run dashboard-only mode (no MCP server) | `npx -y @pimzino/spec-workflow-mcp-pro@latest --dashboard` |
+| `--AutoStartDashboard` | Auto-start dashboard with MCP server | `npx -y @pimzino/spec-workflow-mcp-pro@latest --AutoStartDashboard` |
+| `--port <number>` | Specify dashboard port (1024-65535) | `npx -y @pimzino/spec-workflow-mcp-pro@latest --port 3456` |
+| `--config <path>` | Use custom config file | `npx -y @pimzino/spec-workflow-mcp-pro@latest --config ./my-config.toml` |
 
 ### Usage Examples
 
 #### Dashboard Only Mode
 ```bash
 # Uses ephemeral port
-npx -y @pimzino/spec-workflow-mcp@latest /path/to/project --dashboard
+npx -y @pimzino/spec-workflow-mcp-pro@latest /path/to/project --dashboard
 
 # With custom port
-npx -y @pimzino/spec-workflow-mcp@latest /path/to/project --dashboard --port 3000
+npx -y @pimzino/spec-workflow-mcp-pro@latest /path/to/project --dashboard --port 3000
 ```
 
 #### MCP Server with Auto-Started Dashboard
 ```bash
 # Default port
-npx -y @pimzino/spec-workflow-mcp@latest /path/to/project --AutoStartDashboard
+npx -y @pimzino/spec-workflow-mcp-pro@latest /path/to/project --AutoStartDashboard
 
 # Custom port
-npx -y @pimzino/spec-workflow-mcp@latest /path/to/project --AutoStartDashboard --port 3456
+npx -y @pimzino/spec-workflow-mcp-pro@latest /path/to/project --AutoStartDashboard --port 3456
 ```
 
 #### Using Custom Configuration
 ```bash
 # Relative path
-npx -y @pimzino/spec-workflow-mcp@latest --config ./dev-config.toml
+npx -y @pimzino/spec-workflow-mcp-pro@latest --config ./dev-config.toml
 
 # Absolute path
-npx -y @pimzino/spec-workflow-mcp@latest --config ~/configs/spec-workflow.toml
+npx -y @pimzino/spec-workflow-mcp-pro@latest --config ~/configs/spec-workflow.toml
 
 # Custom config with dashboard
-npx -y @pimzino/spec-workflow-mcp@latest --config ./config.toml --dashboard
+npx -y @pimzino/spec-workflow-mcp-pro@latest --config ./config.toml --dashboard
 
 # CLI args override config values
-npx -y @pimzino/spec-workflow-mcp@latest --config ./config.toml --port 4000
+npx -y @pimzino/spec-workflow-mcp-pro@latest --config ./config.toml --port 4000
 ```
 
 ## Configuration File
@@ -143,10 +143,10 @@ lang = "en"
 3. Use the configuration:
 ```bash
 # Uses .spec-workflow/config.toml automatically
-npx -y @pimzino/spec-workflow-mcp@latest
+npx -y @pimzino/spec-workflow-mcp-pro@latest
 
 # Or specify explicitly
-npx -y @pimzino/spec-workflow-mcp@latest --config .spec-workflow/config.toml
+npx -y @pimzino/spec-workflow-mcp-pro@latest --config .spec-workflow/config.toml
 ```
 
 ## Configuration Precedence
@@ -168,7 +168,7 @@ autoStartDashboard = true
 
 ```bash
 # Command-line argument overrides config file
-npx -y @pimzino/spec-workflow-mcp@latest --config config.toml --port 4000
+npx -y @pimzino/spec-workflow-mcp-pro@latest --config config.toml --port 4000
 # Result: port = 4000 (CLI wins)
 ```
 
@@ -190,7 +190,7 @@ verboseLogging = true
 
 Usage:
 ```bash
-npx -y @pimzino/spec-workflow-mcp@latest --config dev-config.toml
+npx -y @pimzino/spec-workflow-mcp-pro@latest --config dev-config.toml
 ```
 
 ### Production Configuration
@@ -209,7 +209,7 @@ verboseLogging = false
 
 Usage:
 ```bash
-npx -y @pimzino/spec-workflow-mcp@latest --config prod-config.toml
+npx -y @pimzino/spec-workflow-mcp-pro@latest --config prod-config.toml
 ```
 
 ## Port Configuration
@@ -272,7 +272,7 @@ Use a shared configuration with overrides:
 ~/configs/spec-workflow-base.toml
 
 # Project-specific overrides
-npx -y @pimzino/spec-workflow-mcp@latest \
+npx -y @pimzino/spec-workflow-mcp-pro@latest \
   --config ~/configs/spec-workflow-base.toml \
   --port 3000 \
   /path/to/project-a

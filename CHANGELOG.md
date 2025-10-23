@@ -309,9 +309,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Added support for relative project paths and the use of tilde (~) in project paths. Below path formats are now supported:
-    - npx -y @pimzino/spec-workflow-mcp ~/my-project
-    - npx -y @pimzino/spec-workflow-mcp ./relative-path
-    - npx -y @pimzino/spec-workflow-mcp /absolute/path
+    - npx -y @pimzino/spec-workflow-mcp-pro ~/my-project
+    - npx -y @pimzino/spec-workflow-mcp-pro ./relative-path
+    - npx -y @pimzino/spec-workflow-mcp-pro /absolute/path
 
 ## [0.0.12] - 2025-08-11
 

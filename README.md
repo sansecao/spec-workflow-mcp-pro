@@ -1,6 +1,6 @@
 # Spec Workflow MCP
 
-[![npm version](https://img.shields.io/npm/v/@pimzino/spec-workflow-mcp)](https://www.npmjs.com/package/@pimzino/spec-workflow-mcp)
+[![npm version](https://img.shields.io/npm/v/@pimzino/spec-workflow-mcp-pro)](https://www.npmjs.com/package/@pimzino/spec-workflow-mcp-pro)
 [![VSCode Extension](https://badgen.net/vs-marketplace/v/Pimzino.spec-workflow-mcp)](https://marketplace.visualstudio.com/items?itemName=Pimzino.spec-workflow-mcp)
 
 A Model Context Protocol (MCP) server for structured spec-driven development with real-time dashboard and VSCode extension.
@@ -49,7 +49,7 @@ Add to your MCP configuration (see client-specific setup below):
   "mcpServers": {
     "spec-workflow": {
       "command": "npx",
-      "args": ["-y", "@pimzino/spec-workflow-mcp@latest", "/path/to/your/project"]
+      "args": ["-y", "@pimzino/spec-workflow-mcp-pro@latest", "/path/to/your/project"]
     }
   }
 }
@@ -61,7 +61,7 @@ With auto-started dashboard:
   "mcpServers": {
     "spec-workflow": {
       "command": "npx",
-      "args": ["-y", "@pimzino/spec-workflow-mcp@latest", "/path/to/your/project", "--AutoStartDashboard"]
+      "args": ["-y", "@pimzino/spec-workflow-mcp-pro@latest", "/path/to/your/project", "--AutoStartDashboard"]
     }
   }
 }
@@ -71,7 +71,7 @@ With auto-started dashboard:
 
 **Option A: Web Dashboard** (Required for CLI users)
 ```bash
-npx -y @pimzino/spec-workflow-mcp@latest /path/to/your/project --dashboard
+npx -y @pimzino/spec-workflow-mcp-pro@latest /path/to/your/project --dashboard
 ```
 
 **Option B: VSCode Extension** (Recommended for VSCode users)
@@ -99,7 +99,7 @@ Configure in your Augment settings:
   "mcpServers": {
     "spec-workflow": {
       "command": "npx",
-      "args": ["-y", "@pimzino/spec-workflow-mcp@latest", "/path/to/your/project"]
+      "args": ["-y", "@pimzino/spec-workflow-mcp-pro@latest", "/path/to/your/project"]
     }
   }
 }
@@ -111,7 +111,7 @@ Configure in your Augment settings:
 
 Add to your MCP configuration:
 ```bash
-claude mcp add spec-workflow npx @pimzino/spec-workflow-mcp@latest -- /path/to/your/project
+claude mcp add spec-workflow npx @pimzino/spec-workflow-mcp-pro@latest -- /path/to/your/project
 ```
 
 **Important Notes:**
@@ -121,7 +121,7 @@ claude mcp add spec-workflow npx @pimzino/spec-workflow-mcp@latest -- /path/to/y
 
 **Alternative for Windows (if the above doesn't work):**
 ```bash
-claude mcp add spec-workflow cmd.exe /c "npx @pimzino/spec-workflow-mcp@latest /path/to/your/project"
+claude mcp add spec-workflow cmd.exe /c "npx @pimzino/spec-workflow-mcp-pro@latest /path/to/your/project"
 ```
 </details>
 
@@ -134,7 +134,7 @@ Add to `claude_desktop_config.json`:
   "mcpServers": {
     "spec-workflow": {
       "command": "npx",
-      "args": ["-y", "@pimzino/spec-workflow-mcp@latest", "/path/to/your/project"]
+      "args": ["-y", "@pimzino/spec-workflow-mcp-pro@latest", "/path/to/your/project"]
     }
   }
 }
@@ -146,7 +146,7 @@ Or with auto-started dashboard:
   "mcpServers": {
     "spec-workflow": {
       "command": "npx",
-      "args": ["-y", "@pimzino/spec-workflow-mcp@latest", "/path/to/your/project", "--AutoStartDashboard"]
+      "args": ["-y", "@pimzino/spec-workflow-mcp-pro@latest", "/path/to/your/project", "--AutoStartDashboard"]
     }
   }
 }
@@ -162,7 +162,7 @@ Add to your MCP server configuration:
   "mcpServers": {
     "spec-workflow": {
       "command": "npx",
-      "args": ["-y", "@pimzino/spec-workflow-mcp@latest", "/path/to/your/project"]
+      "args": ["-y", "@pimzino/spec-workflow-mcp-pro@latest", "/path/to/your/project"]
     }
   }
 }
@@ -178,7 +178,7 @@ Add to your Continue configuration:
   "mcpServers": {
     "spec-workflow": {
       "command": "npx",
-      "args": ["-y", "@pimzino/spec-workflow-mcp@latest", "/path/to/your/project"]
+      "args": ["-y", "@pimzino/spec-workflow-mcp-pro@latest", "/path/to/your/project"]
     }
   }
 }
@@ -194,7 +194,7 @@ Add to your Cursor settings (`settings.json`):
   "mcpServers": {
     "spec-workflow": {
       "command": "npx",
-      "args": ["-y", "@pimzino/spec-workflow-mcp@latest", "/path/to/your/project"]
+      "args": ["-y", "@pimzino/spec-workflow-mcp-pro@latest", "/path/to/your/project"]
     }
   }
 }
@@ -211,7 +211,7 @@ Add to your `opencode.json` configuration file:
   "mcp": {
     "spec-workflow": {
       "type": "local",
-      "command": ["npx", "-y", "@pimzino/spec-workflow-mcp@latest", "/path/to/your/project"],
+      "command": ["npx", "-y", "@pimzino/spec-workflow-mcp-pro@latest", "/path/to/your/project"],
       "enabled": true
     }
   }

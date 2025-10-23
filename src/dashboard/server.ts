@@ -69,7 +69,7 @@ export class DashboardServer {
     // Only proceed with initialization if we're creating a new dashboard
     // Fetch package version once at startup
     try {
-      const response = await fetch('https://registry.npmjs.org/@pimzino/spec-workflow-mcp/latest');
+      const response = await fetch('https://registry.npmjs.org/@pimzino/spec-workflow-mcp-pro/latest');
       if (response.ok) {
         const packageInfo = await response.json() as { version?: string };
         this.packageVersion = packageInfo.version || 'unknown';

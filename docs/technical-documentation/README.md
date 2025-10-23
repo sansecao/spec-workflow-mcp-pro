@@ -26,7 +26,7 @@
   "mcpServers": {
     "spec-workflow": {
       "command": "npx",
-      "args": ["-y", "@pimzino/spec-workflow-mcp@latest", "/path/to/project", "--AutoStartDashboard"]
+      "args": ["-y", "@pimzino/spec-workflow-mcp-pro@latest", "/path/to/project", "--AutoStartDashboard"]
     }
   }
 }

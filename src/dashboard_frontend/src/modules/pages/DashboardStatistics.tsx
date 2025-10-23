@@ -119,7 +119,7 @@ function Content() {
           
           <div className="flex items-center justify-center gap-4">
             <a
-              href="https://www.npmjs.com/package/@pimzino/spec-workflow-mcp"
+              href="https://www.npmjs.com/package/@pimzino/spec-workflow-mcp-pro"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-lg transition-colors"
