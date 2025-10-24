@@ -77,10 +77,11 @@ i18n
         translation: arTranslation,
       },
     },
-    fallbackLng: 'en',
+    lng: 'zh', // 默认语言：中文
+    fallbackLng: 'zh', // 后备语言：中文
     detection: {
-      // Order of detection methods
-      order: ['localStorage', 'navigator', 'htmlTag'],
+      // 只从 localStorage 读取，不检测浏览器语言
+      order: ['localStorage'],
       // Key to store language preference in localStorage
       lookupLocalStorage: 'preferred-language',
       // Cache the language detection result in localStorage
