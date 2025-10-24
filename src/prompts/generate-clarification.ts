@@ -9,17 +9,17 @@ import { join } from 'path';
 
 const prompt: Prompt = {
     name: 'generate-clarification',
-    title: 'Generate Requirements Clarification Questions',
-    description: 'Generate context-aware clarification questions using AI reasoning, not templates',
+    title: '生成需求澄清问题',
+    description: '基于需求理解规则生成澄清问题',
     arguments: [
         {
             name: 'specName',
-            description: 'Name of the specification',
+            description: '规格名称',
             required: true
         },
         {
             name: 'userRequirement',
-            description: 'User\'s original requirement description',
+            description: '用户的原始需求描述',
             required: true
         }
     ]
@@ -29,195 +29,154 @@ async function handler(args: Record<string, any>, context: ToolContext): Promise
     const { specName, userRequirement } = args;
 
     if (!specName || !userRequirement) {
-        throw new Error('specName and userRequirement are required arguments');
+        throw new Error('specName 和 userRequirement 是必需参数');
     }
 
     const projectPath = context.projectPath;
 
-    // Read project context
-    let steeringContext = '';
+    // 1. 读取需求理解规则文件
+    let ruleContent = '';
+    const rulePath = join(projectPath, '.cursor', 'rules', '1-requirement-understanding.mdc');
+
+    if (existsSync(rulePath)) {
+        try {
+            ruleContent = await readFile(rulePath, 'utf-8');
+            // 移除 frontmatter
+            ruleContent = ruleContent.replace(/^---[\s\S]*?---\n/, '');
+        } catch (error) {
+            console.error('读取规则文件失败:', error);
+        }
+    }
+
+    // 如果没有规则文件，使用默认的前端理解维度
+    if (!ruleContent) {
+        ruleContent = `# 前端需求理解的5个维度
+
+## 1. 功能范围 🎯
+- 要实现哪些具体功能？
+- 哪些功能明确不需要？
+
+## 2. 视觉呈现 🎨
+- 是否有设计稿？
+- 用什么布局？（列表/表格/卡片/表单）
+
+## 3. 数据处理 📊
+- 数据从哪里来？（API/Mock）
+- 需要显示哪些字段？
+
+## 4. 交互操作 🖱️
+- 用户主要操作是什么？
+- 成功/失败后如何反馈？
+
+## 5. 关键异常 🛡️
+- 无数据时显示什么？
+- 失败时如何提示？`;
+    }
+
+    // 2. 读取项目上下文
+    let projectContext = '';
     const steeringPath = PathUtils.getSteeringPath(projectPath);
 
-    // Read product.md
+    // 读取 product.md
     const productPath = join(steeringPath, 'product.md');
     if (existsSync(productPath)) {
         try {
             const productContent = await readFile(productPath, 'utf-8');
-            steeringContext += `\n### product.md\n${productContent}\n`;
+            projectContext += `\n### 产品背景\n${productContent}\n`;
         } catch {
-            // Ignore read errors
+            // 忽略
         }
     }
 
-    // Read tech.md
+    // 读取 tech.md
     const techPath = join(steeringPath, 'tech.md');
     if (existsSync(techPath)) {
         try {
             const techContent = await readFile(techPath, 'utf-8');
-            steeringContext += `\n### tech.md\n${techContent}\n`;
+            projectContext += `\n### 技术栈\n${techContent}\n`;
         } catch {
-            // Ignore read errors
+            // 忽略
         }
     }
 
-    // Read existing specs
+    // 读取现有 specs
     const parser = new SpecParser(projectPath);
     const existingSpecs = await parser.getAllSpecs();
     const existingSpecsList = existingSpecs.length > 0
         ? existingSpecs.map(s => `- ${s.name}`).join('\n')
-        : 'No existing specs.';
+        : '暂无现有规格。';
 
-    const promptMessage = `# Generate Requirements Clarification Questions
+    projectContext += `\n### 现有规格\n${existingSpecsList}\n`;
 
-## Your Mission
-You are an expert requirements analyst. Generate a **smart, minimal, easy-to-answer** clarification checklist that helps you deeply understand the user's requirement.
+    // 3. 生成提示词
+    const promptMessage = `# 生成需求澄清问题
 
-## User's Requirement
+## 你的任务
+你是一个前端开发需求分析师。基于需求理解规则，生成简洁的澄清问题清单。
+
+## 用户的需求
 ${userRequirement}
 
-## Project Context
+## 项目上下文
+${projectContext}
 
-### Steering Documents
-${steeringContext || 'No steering documents found.'}
+## 需求理解规则
+以下规则定义了如何理解和澄清前端需求：
 
-### Existing Specifications
-${existingSpecsList}
-
----
-
-## Question Generation Methodology
-
-### Core Principles
-1. **Eliminate Ambiguity**: Ask only what is unclear or missing
-2. **Easy to Answer**: 80%+ checkbox/radio, <5% open text
-3. **Context-Aware**: Use project info to avoid redundant questions
-4. **Minimal but Sufficient**: 15-25 questions total
-
-### Analysis Framework
-
-#### Step 1: What is CLEAR? (Don't ask)
-- Explicitly stated features
-- Obvious implications
-- Standard practices
-- Already defined in steering docs
-
-#### Step 2: What is AMBIGUOUS? (Must ask)
-- Vague terms needing definition
-- Unclear scope boundaries
-- Missing priorities
-- Conflicting interpretations
-
-#### Step 3: What is MISSING? (Must ask)
-- User roles and permissions
-- Non-functional requirements
-- Integration points
-- Data handling specifics
-
-#### Step 4: What CONFLICTS? (Must clarify)
-- Overlaps with existing specs
-- Inconsistencies with tech stack
-- Contradictions with product vision
-
-### Question Format Priority
-1. **Checkbox (80%+)**: - [ ] **Question** - 需要吗？
-2. **Radio (10-15%)**: 选择一个: [ ] **Option1** [ ] **Option2**
-3. **Number (5-10%)**: **Question**: _____ (提示)
-4. **Short Text (<5%)**: **Question**: _____ (only when critical)
-
-### Question Categories (Use these emoji icons)
-- 🎯 **Core Scope** (必答): Feature boundaries, main functionality
-- 👥 **Users & Roles** (必答): Who uses it, permissions
-- 🔒 **Security & Compliance** (如适用): Security requirements
-- 📱 **Platform & Performance** (重要): Where it runs, performance needs
-- 🎨 **User Experience** (重要): UI/UX preferences
-- 🔗 **Integration** (如适用): External system connections
-- 💡 **Additional** (可选): Edge cases, future considerations
+${ruleContent}
 
 ---
 
-## Output Format
+## 你的使命
 
-Generate the complete clarification document in this EXACT format:
+基于上面的规则，生成一份澄清文档，要求：
+
+1. **遵循规则的维度**：覆盖规则中定义的所有关键维度
+2. **使用规则的模板**：应用规则中的问题模板
+3. **保持简洁**：总共10-15个问题，80%+使用checkbox/radio
+4. **只问不清楚的**：只针对用户需求中模糊的部分提问
+
+---
+
+## 输出格式
+
+生成完整的澄清文档：
 
 \`\`\`markdown
-# Requirements Clarification - ${specName}
+# 需求澄清 - ${specName}
 
-## Original Requirement
+## 原始需求
 ${userRequirement}
 
-## Quick Clarification (请用 ✓ 或 ✗ 标记，或简短回答)
+## 快速澄清（请用 ✓ 标记选择的选项）
 
-### 🎯 Core Scope (必答)
-- [ ] **[Question 1]** - 需要吗？
-- [ ] **[Question 2]** - 需要吗？
-[3-5 critical questions about feature boundaries]
-
-### 👥 Users & Roles (必答)
-- [ ] **[User type 1]** - 有这个角色吗？
-- [ ] **[User type 2]** - 有这个角色吗？
-[2-4 questions about user types and permissions]
-
-### 🔒 Security & Compliance (如适用)
-选择一个: [ ] **基础** [ ] **标准** [ ] **高级**
-- [ ] **[Security feature]** - 需要吗？
-[1-3 questions if security is relevant]
-
-### 📱 Platform & Performance (重要)
-- [ ] **Web浏览器** - 支持吗？
-- [ ] **移动端响应式** - 需要吗？
-- **预期用户数量**: _____ (填写数字，如: 100, 1000, 10000)
-[2-4 questions about platform and performance]
-
-### 🎨 User Experience (重要)
-- [ ] **使用现有设计系统** - 与项目保持一致
-- [ ] **简洁风格** - 最小化设计
-[1-3 questions about UI/UX preferences]
-
-### 🔗 Integration (如适用)
-- [ ] **[External system]** - 需要集成吗？
-[1-3 questions if integration is needed]
-
-### 💡 Additional Considerations (可选)
-- [ ] **[Edge case or future feature]** - 考虑吗？
-[1-2 questions about edge cases]
+[基于规则的维度和模板生成问题]
+[使用规则中的emoji图标和结构]
+[每个维度2-3个问题]
+[总共：10-15个问题]
 
 ---
 
-## Status: ⏳ Waiting for answers (0/X answered)
+## 状态: ⏳ 等待回答 (0/X 已回答)
 **完成后请告诉AI: "澄清完成"**
 \`\`\`
 
 ---
 
-## Quality Checklist
+## 质量检查
 
-Before finalizing, verify:
-- [ ] Total questions: 15-25 (not too many)
-- [ ] Checkbox/Radio: 80%+ (easy to answer)
-- [ ] Every question has clear purpose (no filler)
-- [ ] No obvious questions (e.g., "需要数据库吗？")
-- [ ] No redundant questions (check steering docs)
-- [ ] Questions grouped logically by category
-- [ ] Critical questions marked as "必答"
-- [ ] Simple, clear language (avoid jargon)
-
----
-
-## Examples
-
-### Good Questions ✅
-- "需要用户注册功能吗？（还是只有管理员创建账号？）"
-- "预期同时在线用户数？[ ] <100 [ ] 100-1000 [ ] >1000"
-${existingSpecs.length > 0 ? `- "需要与现有的${existingSpecs[0].name}集成吗？"` : ''}
-
-### Bad Questions ❌
-- "请详细描述认证流程" (太开放，难回答)
-- "需要使用数据库吗？" (显而易见)
-- "你想要什么样的UI？" (太模糊)
+生成前确认：
+- [ ] 总问题数：10-15个
+- [ ] Checkbox/Radio：80%+
+- [ ] 每个问题都有明确目的
+- [ ] 没有显而易见的问题
+- [ ] 问题按维度逻辑分组
+- [ ] 关键问题标记为"必答"
+- [ ] 语言简单清晰
 
 ---
 
-Now, analyze the requirement and generate the clarification document.`;
+现在，分析需求并基于规则生成澄清文档。`;
 
     return [
         {

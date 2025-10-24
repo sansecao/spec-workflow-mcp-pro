@@ -7,19 +7,18 @@ import { dirname } from 'path';
 
 export const requirementsClarificationTool: Tool = {
     name: 'requirements-clarification',
-    description: `Manage requirements clarification process through structured Q&A.
+    description: `通过结构化问答管理需求澄清流程。
 
-This tool helps generate simple yes/no questions to quickly clarify user requirements,
-reducing clarification time from 15-30 minutes to 2-5 minutes.
+此工具帮助生成简单的问题来快速澄清用户需求。
 
-Actions:
-- 'generate': Create clarification.md with AI-generated questions
-- 'check': Parse user answers and calculate completeness
-- 'validate': Check if clarification is sufficient to proceed
-- 'complete': Mark clarification as complete
+操作：
+- 'generate': 创建 clarification.md 并生成澄清问题
+- 'check': 解析用户回答并计算完成度
+- 'validate': 检查澄清是否足够开始开发
+- 'complete': 标记澄清为已完成
 
-The tool does NOT use predefined templates. Instead, it leverages AI to dynamically
-generate context-aware questions based on the user's specific requirement and project context.`,
+工具会读取项目中的 .cursor/rules/1-requirement-understanding.mdc 文件作为需求理解规则，
+基于该规则动态生成针对用户具体需求和项目上下文的澄清问题。`,
 
     inputSchema: {
         type: 'object',
@@ -27,19 +26,19 @@ generate context-aware questions based on the user's specific requirement and pr
             action: {
                 type: 'string',
                 enum: ['generate', 'check', 'validate', 'complete'],
-                description: 'The action to perform'
+                description: '要执行的操作'
             },
             specName: {
                 type: 'string',
-                description: 'Name of the specification (kebab-case format)'
+                description: '规格名称（kebab-case 格式）'
             },
             userRequirement: {
                 type: 'string',
-                description: 'User\'s original requirement description (required for generate action)'
+                description: '用户的原始需求描述（generate 操作必需）'
             },
             clarificationContent: {
                 type: 'string',
-                description: 'Generated clarification questions (required for generate action)'
+                description: '生成的澄清问题内容（generate 操作必需）'
             }
         },
         required: ['action', 'specName']
@@ -129,7 +128,7 @@ async function handleGenerate(
 
         return {
             success: true,
-            message: `Clarification document created at .spec-workflow/specs/${specName}/clarification.md with ${totalQuestions} questions`,
+            message: `澄清文档已创建：.spec-workflow/specs/${specName}/clarification.md，共 ${totalQuestions} 个问题`,
             data: {
                 path: `.spec-workflow/specs/${specName}/clarification.md`,
                 totalQuestions
@@ -138,7 +137,7 @@ async function handleGenerate(
     } catch (error) {
         return {
             success: false,
-            message: `Failed to create clarification document: ${error instanceof Error ? error.message : String(error)}`
+            message: `创建澄清文档失败：${error instanceof Error ? error.message : String(error)}`
         };
     }
 }
@@ -154,7 +153,7 @@ async function handleCheck(
         if (!existsSync(clarificationPath)) {
             return {
                 success: false,
-                message: `Clarification document not found for spec: ${specName}`
+                message: `未找到规格 ${specName} 的澄清文档`
             };
         }
 
@@ -163,13 +162,13 @@ async function handleCheck(
 
         return {
             success: true,
-            message: `Clarification status: ${result.completeness}% complete (${result.answeredQuestions}/${result.totalQuestions} answered)`,
+            message: `澄清状态：${result.completeness}% 完成（${result.answeredQuestions}/${result.totalQuestions} 已回答）`,
             data: result
         };
     } catch (error) {
         return {
             success: false,
-            message: `Failed to check clarification status: ${error instanceof Error ? error.message : String(error)}`
+            message: `检查澄清状态失败：${error instanceof Error ? error.message : String(error)}`
         };
     }
 }
@@ -185,7 +184,7 @@ async function handleValidate(
         if (!existsSync(clarificationPath)) {
             return {
                 success: false,
-                message: `Clarification document not found for spec: ${specName}`
+                message: `未找到规格 ${specName} 的澄清文档`
             };
         }
 
@@ -198,21 +197,21 @@ async function handleValidate(
         return {
             success: true,
             message: isValid
-                ? 'Clarification is sufficient to proceed'
-                : `More clarification needed (${result.completeness}% complete)`,
+                ? '澄清已足够，可以开始开发'
+                : `需要更多澄清（${result.completeness}% 完成）`,
             data: {
                 isValid,
                 completeness: result.completeness,
                 missingRequired,
                 suggestion: isValid
-                    ? 'Ready to generate requirements document'
-                    : 'Please answer remaining questions or generate follow-up questions'
+                    ? '准备生成需求文档'
+                    : '请回答剩余问题或生成后续澄清问题'
             }
         };
     } catch (error) {
         return {
             success: false,
-            message: `Failed to validate clarification: ${error instanceof Error ? error.message : String(error)}`
+            message: `验证澄清失败：${error instanceof Error ? error.message : String(error)}`
         };
     }
 }
@@ -228,7 +227,7 @@ async function handleComplete(
         if (!existsSync(clarificationPath)) {
             return {
                 success: false,
-                message: `Clarification document not found for spec: ${specName}`
+                message: `未找到规格 ${specName} 的澄清文档`
             };
         }
 
@@ -236,20 +235,20 @@ async function handleComplete(
 
         // Update status line
         content = content.replace(
-            /## Status: ⏳ Waiting for answers.*$/m,
-            '## Status: ✅ Completed'
+            /## 状态: ⏳ 等待回答.*$/m,
+            '## 状态: ✅ 已完成'
         );
 
         await writeFile(clarificationPath, content, 'utf-8');
 
         return {
             success: true,
-            message: 'Clarification marked as complete'
+            message: '澄清已标记为完成'
         };
     } catch (error) {
         return {
             success: false,
-            message: `Failed to complete clarification: ${error instanceof Error ? error.message : String(error)}`
+            message: `完成澄清失败：${error instanceof Error ? error.message : String(error)}`
         };
     }
 }
